@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📖 Рецепти | Грузинська кухня</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<table class="site-table">
+    <tr class="header-row">
+        <td class="header-content">
+            <table width="100%">
+                <tr>
+                    <td align="left">
+                        <span class="flag-decoration">🇬🇪</span>
+                        <span class="logo" onclick="location.href='index.html'">🇬🇪 Грузинська кухня <small>гамарджоба!</small></span>
+                        <span class="flag-decoration" style="margin-left:15px;">🇬🇪</span>
+                    </td>
+                    <td align="right"><span class="date-time" id="currentDateTime"></span></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr class="tabs-row">
+        <td class="tabs-cell">
+            <table class="tabs-table">
+                <tr>
+                    <td align="center">
+                        <a href="index.html" class="tab-btn">🏔️ Головна</a>
+                        <a href="recipes.html" class="tab-btn active">📖 Рецепти</a>
+                        <a href="traditions.html" class="tab-btn">🍷 Традиції</a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="main-content">
+            <div class="category-header">
+                <h1>📖 ქართული რეცეპტები</h1>
+                <p>Найсмачніші страви з покроковими інструкціями</p>
+            </div>
+
+            <table class="recipes-grid" id="allRecipes"></table>
+
+            <table class="subscribe">
+                <tr>
+                    <td align="center">
+                        <h3>📧 Грузинських новин</h3>
+                        <p>გამოიწერეთ — Підпишись — отримуй нові рецепти щотижня</p>
+                        <div class="subscribe-form">
+                            <input type="email" id="subEmail" placeholder="твій email">
+                            <button onclick="subscribeNews()">Підписатись</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr class="footer">
+        <tr>
+            <p>🇬🇪 Грузинська кухня — гостинність, яка смакує | Გემრიელად მიირთვით!</p>
+            <p>рецепти, історія, культура харчування | 2026</p>
+        </td>
+    </tr>
+</table>
+
+<div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑</div>
+
+<div id="modal" class="modal" onclick="if(event.target===this) closeModal()">
+    <div class="modal-content">
+        <div class="modal-header"><h2 id="modalTitle"></h2><span class="close-modal" onclick="closeModal()">&times;</span></div>
+        <div class="modal-body" id="modalBody"></div>
+    </div>
+</div>
+
+<script>
+    const allRecipes = [
+        { id: 1, title: "🥟 Хінкалі", excerpt: "Соковиті грузинські вареники з м'ясом та бульйоном всередині.", content: "Тісто: борошно 500г, вода 200мл, сіль, олія. Начинка: яловичина 300г, свинина 200г, цибуля 2шт, кінза, перець, сіль, вода 100мл. Замісити тісто, розкачати. Додати начинку, защипати зверху хвостиком. Варити у киплячій воді 12-15 хвилин. Подавати з меленим чорним перцем. Გემრიელად მიირთვით!", emoji: "🥟", date: "2026-05-20", views: 28400, category: "Рецепт" },
+        { id: 2, title: "🧀 Хачапурі по-аджарськи", excerpt: "Човники з сиром та яйцем — візитівка грузинської кухні.", content: "Тісто: борошно 400г, вода 200мл, дріжджі 7г, цукор, сіль. Начинка: сулугуні 300г, адигейський сир 200г, яйце 2шт, вершкове масло 50г. Випікати 15 хвилин при 200°C, потім додати яйце і ще на 5 хвилин. Подавати з вершковим маслом.", emoji: "🧀", date: "2026-05-19", views: 31200, category: "Рецепт" },
+        { id: 3, title: "🍲 Сациві з курки", excerpt: "Ніжне куряче м'ясо у волосько-горіховому соусі.", content: "Курка 1.5кг вариться, потім обсмажується. Соус: волоські горіхи 300г, часник 4 зубчики, хмелі-сунелі 1ст.л., шафран, курячий бульйон 500мл. Залити соусом курку, варити 15 хвилин. Подавати охолодженим.", emoji: "🍲", date: "2026-05-18", views: 18700, category: "Рецепт" },
+        { id: 4, title: "🍆 Бадріджані", excerpt: "Смажені баклажани з горіховою пастою та гранатом.", content: "Баклажани 4шт нарізати вздовж, обсмажити. Начинка: волоські горіхи 200г, часник 3 зубчики, кінза, хмелі-сунелі 1ч.л., винний оцет 1ст.л. Намазати начинку на баклажани, згорнути рулетом. Прикрасити зернами граната.", emoji: "🍆", date: "2026-05-17", views: 14500, category: "Рецепт" },
+        { id: 5, title: "🍖 Шашлик по-грузинськи", excerpt: "Соковите м'ясо, мариноване у винному оцті з травами.", content: "Свинина або яловичина 1.5кг нарізати шматками. Маринад: винний оцет 100мл, цибуля 3шт, кінза, петрушка, хмелі-сунелі, сіль, перець. Маринувати 6-8 годин. Смажити на вугіллі 15-20 хвилин.", emoji: "🍖", date: "2026-05-16", views: 22200, category: "Рецепт" },
+        { id: 6, title: "🍯 Чурчхела", excerpt: "Грузинський десерт із виноградного соку та горіхів.", content: "Горіхи (волоські, фундук) нанизати на нитку. Виноградний сік (пеламуш) уварювати з борошном 1 годину. Вмочити нитки з горіхами в суміш, повторити 3-5 разів. Сушити 2 тижні.", emoji: "🍯", date: "2026-05-15", views: 16800, category: "Рецепт" }
+    ];
+
+    function formatDate(dateStr) {
+        const d = new Date(dateStr);
+        return d.getDate().toString().padStart(2,'0') + '.' + (d.getMonth()+1).toString().padStart(2,'0') + '.' + d.getFullYear();
+    }
+
+    function openModal(item) {
+        document.getElementById('modalTitle').innerHTML = item.title;
+        document.getElementById('modalBody').innerHTML = 
+            '<div class="modal-emoji">' + item.emoji + '</div>' +
+            '<div class="modal-meta"><span>📅 ' + formatDate(item.date) + '</span><span>👁️ ' + item.views.toLocaleString() + '</span><span>📌 ' + item.category + '</span><span>🇬🇪</span></div>' +
+            '<p style="line-height:1.6; color:#5c2e0e;">' + item.content + '</p>';
+        document.getElementById('modal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('modal').style.display = 'none';
+    }
+
+    function subscribeNews() {
+        const email = document.getElementById('subEmail').value;
+        if(email) alert('🇬🇪 გამარჯვება! На ' + email + ' надіслано підтвердження.');
+        else alert('Введи email');
+    }
+
+    function renderAllRecipes() {
+        let html = '<tr>';
+        for(let i = 0; i < allRecipes.length; i++) {
+            const r = allRecipes[i];
+            html += '<td width="33%"><div class="recipe-card" onclick="openModal

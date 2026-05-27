@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍷 Традиції | Грузинська кухня</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<table class="site-table">
+    <tr class="header-row">
+        <td class="header-content">
+            <table width="100%">
+                <tr>
+                    <td align="left">
+                        <span class="flag-decoration">🇬🇪</span>
+                        <span class="logo" onclick="location.href='index.html'">🇬🇪 Грузинська кухня <small>гамарджоба!</small></span>
+                        <span class="flag-decoration" style="margin-left:15px;">🇬🇪</span>
+                    </td>
+                    <td align="right"><span class="date-time" id="currentDateTime"></span></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr class="tabs-row">
+        <td class="tabs-cell">
+            <table class="tabs-table">
+                <tr>
+                    <td align="center">
+                        <a href="index.html" class="tab-btn">🏔️ Головна</a>
+                        <a href="recipes.html" class="tab-btn">📖 Рецепти</a>
+                        <a href="traditions.html" class="tab-btn active">🍷 Традиції</a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="main-content">
+            <div class="category-header">
+                <h1>🍷 ქართული ტრადიციები</h1>
+                <p>Гостинність, застілля та культура харчування Грузії</p>
+            </div>
+
+            <table class="traditions-list" id="traditionsList"><tr>
+
+            <table class="subscribe">
+                <tr>
+                    <td align="center">
+                        <h3>📧 Грузинських новин</h3>
+                        <p>გამოიწერეთ — Підпишись — отримуй нові рецепти щотижня</p>
+                        <div class="subscribe-form">
+                            <input type="email" id="subEmail" placeholder="твій email">
+                            <button onclick="subscribeNews()">Підписатись</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr class="footer">
+        <tr>
+            <p>🇬🇪 Грузинська кухня — гостинність, яка смакує | Გემრიელად მიირთვით!</p>
+            <p>рецепти, історія, культура харчування | 2026</p>
+        </td>
+    </tr>
+</table>
+
+<div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑</div>
+
+<div id="modal" class="modal" onclick="if(event.target===this) closeModal()">
+    <div class="modal-content">
+        <div class="modal-header"><h2 id="modalTitle"></h2><span class="close-modal" onclick="closeModal()">&times;</span></div>
+        <div class="modal-body" id="modalBody"></div>
+    </div>
+</div>
+
+<script>
+    const traditions = [
+        {
+            id: 1,
+            title: "🍷 Грузинське застілля — Супра",
+            excerpt: "Тамада, тости, гостинність — душа грузинської культури.",
+            content: "Грузинське застілля — це не просто їжа, а ціла філософія. Тамада веде бенкет, виголошуючи тости за мир, дружбу, родину, кохання, гостинність та пам'ять предків. Традиційно гості сидять за великим столом, наповненим стравами: сациві, хінкалі, хачапурі, шашлик, лобіо. Жодне застілля не обходиться без вина. Гостинність для грузинів — священне поняття: 'Старійшини кажуть, що гість — посланець Бога'. Застілля може тривати годинами, а то й до ранку, під супра — спів народних пісень.",
+            emoji: "🍷",
+            date: "2026-05-20",
+            views: 18700,
+            category: "Традиція"
+        },
+        {
+            id: 2,
+            title: "🍇 Ртвелі — збирання винограду",
+            excerpt: "Свято врожаю, яке об'єднує всю родину та сусідів.",
+            content: "Ртвелі — традиційне грузинське свято збору винограду. Воно відбувається восени, зазвичай у вересні-жовтні. Вся родина, сусіди та друзі збираються разом, щоб зібрати виноград та приготувати вино. Це день радості, пісень, танців та, звісно ж, смачної їжі. Після роботи всі сідають за святковий стіл. Вино, зроблене власноруч у глиняних глечиках — квеврі, вважається найкращим. Традиція квеврі навіть включена до списку нематеріальної спадщини ЮНЕСКО.",
+            emoji: "🍇",
+            date: "2026-05-19",
+            views: 12400,
+            category: "Традиція"
+        },
+        {
+            id: 3,
+            title: "🥖 Шуоті — грузинський хліб",
+            excerpt: "Хліб, випечений у спеціальній печі тоне, має форму місяця.",
+            content: "Шуоті — це традиційний грузинський хліб, який випікають у глиняній печі тоне. Він має витягнуту форму, схожу на півмісяць. Хліб випікають прямо на стінках печі, тому він має хрустку скоринку та м'яку середину. Шуоті подають до майже кожної страви. У Грузії існує традиція: ламати хліб разом — символ миру та злагоди. Жодне застілля не починається без хліба. Існує також повір'я, що той, хто випікає хліб, передає йому частинку своєї душі.",
+            emoji: "🥖",
+            date: "2026-05-18",
+            views: 8900,
+            category: "Традиція"
+        },
+        {
+            id: 4,
+            title: "🎭 Грузинське багатоголосся",
+            excerpt: "Народні пісні, які супроводжують кожне застілля та свято.",
+            content: "Грузинське багатоголосся — унікальне явище, визнане ЮНЕСКО шедевром усної нематеріальної спадщини. Існує три види багатоголосся: східногрузинське (діалог трьох голосів), західногрузинське та сванеське. На кожному застіллі гості співають народні пісні. Особливо відомі пісні 'Чакруло', 'Мравалжамієр', 'Суліко'. Співають і чоловіки, і жінки. Традиція передається з покоління в покоління, і жодна урочистість не обходиться без живого співу.",
+            emoji: "🎭",
+            date: "2026-05-17",
+            views: 7600,
+            category: "Традиція"
+        },
+        {
+            id: 5,
+            title: "💃 Грузинські танці",
+            excerpt: "Вогненна лезгінка та ніжний картулі — візитівка Грузії.",
+            content: "Грузинські народні танці вражають своєю грацією та енергією. Найвідоміші — 'Картулі' (ніжний танець закоханих, де чоловік танцює навколо жінки, не торкаючись її) та 'Лезгінка' (швидкий чоловічий танець на пальцях). Також відомі танець 'Хоруми' — древній войовничий танець, та 'Саміка' — жіночий танець зі свічками. Танці супроводжують усі свята: весілля, дні народження, національні фестивалі. Національний балет 'Сухішвілі' відомий на весь світ.",
+            emoji: "💃",
+            date: "2026-05-16",
+            views: 10500,
+            category: "Традиція"
+        },
+        {
+            id: 6,
+            title: "🇬🇪 Гостинність по-грузинськи",
+            excerpt: "Гість — посланець Бога: традиції прийому гостей у Грузії.",
+            content: "У Грузії існує прислів'я: 'Гість — посланець Бога'. Тому кожного гостя зустрічають з особливою пошаною. Гостя саджають на найпочесніше місце — 'деда' (найкраще місце за столом). Його пригощають найкращими стравами та вином. Хазяїн особисто нарізає м'ясо та пригощає гостя. Відмовитися від частування вважається образою. Гість не повинен йти голодним. Навіть якщо гість зайшов на хвилину, йому обов'язково запропонують каву, чай або вино та частування.",
+            emoji: "🇬🇪",
+            date: "2026-05-15",
+            views: 14300,
+            category: "Традиція"
+        }
+    ];
+
+    function formatDate(dateStr) {
+        const d = new Date(dateStr);
+        return d.getDate().toString().padStart(2,'0') + '.' + (d.getMonth()+1).toString().padStart(2,'0') + '.' + d.getFullYear();
+    }
+
+    function openModal(item) {
+        document.getElementById('modalTitle').innerHTML = item.title;
+        document.getElementById('modalBody').innerHTML = 
+            '<div class="modal-emoji">' + item.emoji + '</div>' +
+            '<div class="modal-meta">' +
+                '<span>📅 ' + formatDate(item.date) + '</span>' +
+                '<span>👁️ ' + item.views.toLocaleString() + '</span>' +
+                '<span>📌 ' + item.category + '</span>' +
+                '<span>🇬🇪</span>' +
+            '</div>' +
+            '<p style="line-height:1.6; color:#5c2e0e;">' + item.content + '</p>';
+        document.getElementById('modal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('modal').style.display = 'none';
+    }
+
+    function subscribeNews() {
+        const email = document.getElementById('subEmail').value;
+        if(email) {
+            alert('🇬🇪 გამარჯვება! На ' + email + ' надіслано підтвердження.');
+        } else {
+            alert('Введи email');
+        }
+    }
+
+    function renderTraditions() {
+        let html = '';
+        for (let i = 0; i < traditions.length; i++) {
+            const t = traditions[i];
+            html += '<tr class="tradition-item" onclick="openModal(traditions[' + i + '])">';
+            html += '<td class="tradition-emoji" align="center">' + t.emoji + '</td>';
+            html += '<td>';
+            html += '<div class="tradition-title">' + t.title + '</div>';
+            html += '<div class="tradition-excerpt">' + t.excerpt + '</div>';
+            html += '<div class="recipe-meta" style="margin-top:8px;">';
+            html += '<span>📅 ' + formatDate(t.date) + '</span>';
+            html += '<span>👁️ ' + t.views.toLocaleString() + '</span>';
+            html += '</div>';
+            html += '</td>';
+            html += '</tr>';
+        }
+        document.getElementById('traditionsList').innerHTML = html;
+    }
+
+    function updateDateTime() {
+        const d = new Date();
+        const options = { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short' };
+        document.getElementById('currentDateTime').innerHTML = d.toLocaleString('uk-UA', options);
+    }
+
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+    renderTraditions();
+
+    window.addEventListener('scroll', function() {
+        const el = document.getElementById('scrollTop');
+        if(window.scrollY > 300) {
+            el.classList.add('show');
+        } else {
+            el.classList.remove('show');
+        }
+    });
+
+    window.openModal = openModal;
+    window.closeModal = closeModal;
+    window.subscribeNews = subscribeNews;
+    window.traditions = traditions;
+</script>
+</body>
+</html>
